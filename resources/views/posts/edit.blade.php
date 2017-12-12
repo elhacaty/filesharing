@@ -17,7 +17,7 @@
         <div class="form-group">
             <label style="margin-bottom: 10px;">Chọn Viện:</label>
             <select class="form-control" id="institute" name="institute"
-                    onchange="populateDepartments('institute', 'program')" required>
+                    onchange="populatePrograms('institute', 'program')" required>
                 <option></option>
                 @foreach($institutes as $institute)
                     <option value="{{$institute->id}}">{{$institute->name}}</option>
