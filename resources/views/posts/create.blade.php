@@ -21,7 +21,7 @@
                 @endforeach
             </select>
 
-            <label style="margin-bottom: 10px; margin-top: 10px;">Chọn Bộ môn:</label>
+            <label style="margin-bottom: 10px; margin-top: 10px;">Chọn Chương trình đào tạo:</label>
             <select class="form-control" id="program" name="program" onchange="populateSubjects('program', 'subject')" required>
 
             </select>

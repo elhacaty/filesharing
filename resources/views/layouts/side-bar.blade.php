@@ -37,7 +37,7 @@
                         <tr>
                             <td>
                                 <span class="glyphicon glyphicon-chevron-right text-success"></span><a
-                                        href="#"> Hệ Thống Thông Tin</a>
+                                        href="/is"> Hệ Thống Thông Tin</a>
                             </td>
                         </tr>
                         <tr>

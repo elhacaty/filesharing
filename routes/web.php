@@ -57,6 +57,7 @@ Route::patch('/posts/{post}/edit', 'PostController@save');
 
 Route::delete('/posts/{post}/delete-post', 'PostController@destroy');
 
+Route::get('/search', 'PostController@search');
 
 
 Route::resource('subjects', 'SubjectController');
@@ -71,7 +72,8 @@ Route::post('/posts/{post}/comments', 'CommentController@store');
 
 Route::delete('/posts/{post_id}/{comment_id}/delete-comment', 'CommentController@destroy');
 
-Route::get('/search', 'PostController@search');
+
+Route::get('/is', 'ProgramController@is_posts');
 
 
 Auth::routes();
