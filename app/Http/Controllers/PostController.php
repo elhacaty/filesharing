@@ -88,8 +88,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $institutes = Institute::all();
-        $programs = Program::all();
-        return view('posts.edit', compact('post', 'institutes', 'programss'));
+        return view('posts.edit', compact('post', 'institutes'));
     }
 
     /**
