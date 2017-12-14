@@ -9,7 +9,7 @@
 
         <div class="form-group">
             <label for="sel1" style="margin-bottom: 10px;">Chọn Viện:</label>
-            <select class="form-control" id="institute" name="institute" onchange="populate('institute', 'program')">
+            <select class="form-control" id="institute" name="institute" onchange="populate('institute', 'program')" required>
                 <option></option>
                 @foreach($institutes as $institute)
                     <option value="{{$institute->id}}">{{$institute->name}}</option>

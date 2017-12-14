@@ -67,7 +67,9 @@
                         <li>
                             <p class="navbar-text">Xin chào, {{Auth::user()->name}}</p>
                         </li>
-                        <li><a href="/posts/create/">Tạo bài viết mới</a></li>
+                        @if (Auth::user()->status == "approved")
+                            <li><a href="/posts/create/">Tạo bài viết mới</a></li>
+                        @endif
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tài khoản <span
                                         class="caret"></span></a>
@@ -76,7 +78,7 @@
                                 <li><a href="/posts/liked">Các bài viết đã thích</a></li>
                                 <li><a href="/posts/commented">Các bài viết đã bình luận</a></li>
                                 <li class="divider"></li>
-                                <li><a href="/password-change">Thay đổi mật khẩu</a> </li>
+                                <li><a href="/password-change">Thay đổi mật khẩu</a></li>
                                 <li class="divider"></li>
                                 <li><a data-toggle="modal" data-target="#logoutModal" style="cursor: pointer">Đăng
                                         xuất</a></li>

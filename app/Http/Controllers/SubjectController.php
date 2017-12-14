@@ -27,8 +27,7 @@ class SubjectController extends Controller
     public function create()
     {
         $institutes = Institute::all();
-        $programs = Program::all();
-        return view('subjects.create', compact('institutes', 'programs'));
+        return view('subjects.create', compact('institutes'));
     }
 
     /**

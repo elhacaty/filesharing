@@ -17,45 +17,47 @@
 
             @if (Auth::check())
                 @if (Auth::user()->id == $post->user->id)
+                    @if(Auth::user()->status == "approved")
+                        <!-- edit post button -->
+                            <form style="display: inline" action="/posts/{{$post->id}}/edit" method="get">
+                                <button class="btn btn-warning btn-sm">Chỉnh sửa bài viết</button>
+                            </form>
 
-                    <!-- edit post button -->
-                        <form style="display: inline" action="/posts/{{$post->id}}/edit" method="get">
-                            <button class="btn btn-warning btn-sm">Chỉnh sửa bài viết</button>
-                        </form>
-
-                        <!-- Delete post button -->
-                        <a style="margin-left: 5px;" class="btn btn-danger btn-sm" data-toggle="modal"
-                           data-target="#delete-postModal">Xóa bài viết</a>
-                        <div class="modal fade" id="delete-postModal" tabindex="-1" role="dialog"
-                             aria-labelledby="basicModal" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                            &times;
-                                        </button>
-                                        <h4 class="modal-title" id="myModalLabel">Xác nhận xóa</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <i class="fa fa-trash-o fa-2x" aria-hidden="true"> Bạn có chắc chắn muốn xóa bài
-                                            viết này?</i>
-                                        {{--<h3>Bạn có chắc chắn muốn xóa bình luận này?</h3>--}}
-                                    </div>
-                                    <div class="modal-footer">
-                                        <form style="display: inline;" class="input-group" method="post"
-                                              action="/posts/{{$post->id}}/delete-post">
-                                            {{method_field('DELETE')}}
-                                            {{csrf_field()}}
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng
+                            <!-- Delete post button -->
+                            <a style="margin-left: 5px;" class="btn btn-danger btn-sm" data-toggle="modal"
+                               data-target="#delete-postModal">Xóa bài viết</a>
+                            <div class="modal fade" id="delete-postModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="basicModal" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                &times;
                                             </button>
-                                            <button type="submit" class="btn btn-danger">
-                                                Xóa bài viết
-                                            </button>
-                                        </form>
+                                            <h4 class="modal-title" id="myModalLabel">Xác nhận xóa</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <i class="fa fa-trash-o fa-2x" aria-hidden="true"> Bạn có chắc chắn muốn xóa
+                                                bài
+                                                viết này?</i>
+                                            {{--<h3>Bạn có chắc chắn muốn xóa bình luận này?</h3>--}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form style="display: inline;" class="input-group" method="post"
+                                                  action="/posts/{{$post->id}}/delete-post">
+                                                {{method_field('DELETE')}}
+                                                {{csrf_field()}}
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng
+                                                </button>
+                                                <button type="submit" class="btn btn-danger">
+                                                    Xóa bài viết
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     @endif
                 @endif
             </div>
@@ -64,10 +66,12 @@
             <div class="col-md-4" style="margin-top:5px;" data-postid="{{$post->id}}">
                 {{--like and dislike button--}}
                 @if(Auth::check())
-                    <button class="like btn btn-success btn-sm" style="margin-right: 5px;">{{Auth::user()->likes()->where('post_id', $post->id)->first() ?
+                    @if(Auth::user()->status == "approved")
+                        <button class="like btn btn-success btn-sm" style="margin-right: 5px;">{{Auth::user()->likes()->where('post_id', $post->id)->first() ?
                     Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'You like this post' : 'Like' : 'Like'}}</button>
-                    <button class="like btn btn-danger btn-sm">{{Auth::user()->likes()->where('post_id', $post->id)->first() ?
+                        <button class="like btn btn-danger btn-sm">{{Auth::user()->likes()->where('post_id', $post->id)->first() ?
                     Auth::user()->likes()->where('post_id', $post->id)->first()->like == 0 ? 'You don\'t like this post' : 'Dislike' : 'Dislike'}}</button>
+                    @endif
                 @endif
 
                 {{--post rating: based on views, downloads, likes--}}
@@ -132,7 +136,7 @@
                                               action="/posts/{{$post->id}}/{{$comment->id}}/delete-comment">
                                             {{method_field('DELETE')}}
                                             {{csrf_field()}}
-                                            <button type="delete" class="btn btn-danger">Xóa</button>
+                                            <button type="submit" class="btn btn-danger">Xóa</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Đóng
                                             </button>
                                         </form>
@@ -149,12 +153,14 @@
 
     <!-- add comment field and button-->
     @if(Auth::check())
-        <form method="post" action="/posts/{{$post->id}}/comments">
-            {{csrf_field()}}
-            <textarea rows="4" cols="100" style="margin-top:10px" class="form-control" name="comment-content"
-                      placeholder="Write comment here" required></textarea>
-            <button type="submit" class="btn btn-info" style="margin-top:10px">Add comment</button>
-        </form>
+        @if(Auth::user()->status == "approved")
+            <form method="post" action="/posts/{{$post->id}}/comments">
+                {{csrf_field()}}
+                <textarea rows="4" cols="100" style="margin-top:10px" class="form-control" name="comment-content"
+                          placeholder="Write comment here" required></textarea>
+                <button type="submit" class="btn btn-info" style="margin-top:10px">Add comment</button>
+            </form>
+        @endif
     @endif
 
     <script>
